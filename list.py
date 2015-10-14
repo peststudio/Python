@@ -1,7 +1,6 @@
-import os, sys
+import os, sys, time
 from stat import *
 def get_filepath(directory):
-	files = ""
 	for name in os.listdir(directory):
 		pathname = os.path.join(directory, name)
         	mode = os.stat(pathname).st_mode
@@ -10,8 +9,7 @@ def get_filepath(directory):
 		gid = os.stat(pathname).st_gid
 		size = os.stat(pathname).st_size
 		mtime = os.stat(pathname).st_mtime
-		print permission, uid, gid, size, chr(9), mtime, name 
-        return files
-#print get_filepath("/home/lei/codes/Python")
+		ftime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(mtime))
+		print permission, uid, gid, size, chr(9), ftime, name 
 if __name__ == '__main__':
     get_filepath(sys.argv[1])

@@ -1,27 +1,29 @@
 import os, sys, time
-from stat import *
-from pwd import getpwnam, getpwuid
+import stat 
+import pwd
+import grp 
 
 def list_files(directory):
 	for name in os.listdir(directory):
 		pathname = os.path.join(directory, name)
-        	mode = os.stat(pathname).st_mode
-		permission = oct(S_IMODE(mode))
-		isdir = S_ISDIR(mode)
+		path_stat = os.stat(pathname)
+        	mode = path_stat.st_mode
+		permission = oct(stat.S_IMODE(mode))
+		isdir = stat.S_ISDIR(mode)
 		if isdir == 1:
 			d = 'd'
 		else:
 			d = '-'
 		fpermission = format_permission(permission)
 		fpermission = d + fpermission
-		uid = os.stat(pathname).st_uid
-		uname = getpwuid(uid)
-		#gid = os.stat(pathname).st_gid
-		#gname = getpwuid(gid)
-		size = os.stat(pathname).st_size
-		mtime = os.stat(pathname).st_mtime
+		uid = path_stat.st_uid
+		uname = pwd.getpwuid(uid)
+		gid = os.stat(pathname).st_gid
+		gname = grp.getgrgid(gid)
+		size = path_stat.st_size
+		mtime = path_stat.st_mtime
 		ftime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(mtime))
-		print fpermission, uname.pw_name, size, chr(9), ftime, name 
+		print fpermission, uname.pw_name, gname.gr_name, size, '\t', ftime, name
 
 def format_permission(permission):
 	int_perm = int(permission)

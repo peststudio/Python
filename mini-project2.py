@@ -1,8 +1,8 @@
 # template for "Guess the number" mini-project
 # input will come from buttons and an input field
 # all output for the game will be printed in the console
-
-import simplegui
+import simpleguitk as simplegui
+#import simplegui
 import random
 import math
 number_range = 100
@@ -11,7 +11,6 @@ guesses = 0
 # helper function to start and restart the game
 def new_game():
     # initialize global variables used in your code here
-
     global secret_number
     global guesses
     secret_number = random.randrange(0,number_range)
@@ -68,6 +67,7 @@ def input_guess(guess):
 # create frame
 new_frame = simplegui.create_frame("Guess the Number",200,300)
 
+new_game()
 # register event handlers for control elements and start frame
 new_frame.add_input("Your Guess",input_guess,100)
 new_frame.add_button("New Game",new_game,200)
@@ -75,7 +75,6 @@ new_frame.add_button("Range is [0,100)",range100,200)
 new_frame.add_button("Range is [0,1000)",range1000,200)
 new_frame.start()
 # call new_game 
-new_game()
 
 
 # always remember to check your completed program against the grading rubric
